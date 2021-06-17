@@ -4,14 +4,10 @@
 
 function percToPixel(val, base) {
   if (typeof val === "string") {
-    const values = val.split(/(?=[-])/g).map((num) => parseInt(num, 10));
+    const values = val.split(/(?=-)/).map((num) => parseInt(num, 10));
+    console.log("values:", values);
     return (values[0] * base) / 100 + values[1];
   }
-  // console.log("---percToPixel---");
-  // console.log("val", val);
-  // console.log("base", base);
-  // console.log("calc", (val / 100) * base);
-  // console.log("--------------");
   return (val / 100) * base;
 }
 
@@ -79,11 +75,10 @@ const buildFrame = (svgId, points, options = {}) => {
   //   document.documentElement.clientHeight || 0,
   //   window.innerHeight || 0
   // );
-  const vw = 1000;
+  const vw = 1200;
+  const vh = 600;
 
-  const vh = 1000;
-
-  let { hStart = 100, vStart = 100, arcRad = 0 } = options;
+  let { hStart = 10, vStart = 10, arcRad = 1 } = options;
 
   // Setting up the SVG
   svg.setAttribute("width", `${vw}px`);
@@ -103,23 +98,23 @@ const buildFrame = (svgId, points, options = {}) => {
 
   // Creating path
   points.forEach((p, index) => {
-    const axis = p[0] === "h" ? vw - hStart * 2 : vh - vStart * 2;
-    const operation = p[1] > 0 ? -1 : 1;
+    const [command, val, fix] = p;
+    const axis = command === "h" ? vw - hStart * 2 : vh - vStart * 2;
+    const operation = val > 0 ? -1 : 1;
     const considerArc = arcRad * 2 * operation;
+    // const calculated = fix
+    //   ? percToPixel(val, axis) + considerArc + percToPixel(fix, axis)
+    //   : percToPixel(val, axis) + considerArc;
+    const calculated = percToPixel(val, axis) + considerArc;
+
     // Add line
-    path += p[0] + (percToPixel(p[1], axis) + considerArc);
-
-    if (p[0] === "h") {
-      //   console.log("------");
-      console.log(`pixel for '${p[0]}'`, percToPixel(p[1], axis));
-      console.log("consider", considerArc);
-      //   console.log("vw", vw);
-      //   console.log("hStart", hStart);
-      //   console.log("------");
-    }
-
+    path += command + calculated;
     // Add arc
     path += createArc(p, index);
+    // if (fix) {
+    // console.log("path length", percToPixel(val, axis) + considerArc);
+    // console.log("new fix value", percToPixel(fix, axis));
+    // }
   });
 
   const svgPath = svg.querySelector("path");
