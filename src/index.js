@@ -53,13 +53,6 @@ const pathTestFour = [
   ["v", -80],
 ];
 
-const pathStrings = [
-  ["h", "90%-20px"],
-  ["v", "90%-20px"],
-  ["h", "-90%-20px"],
-  ["v", "-90%-20px"],
-];
-
 const pathInts = [
   ["h", 100],
   ["v", 60],
@@ -72,6 +65,7 @@ const pathInts = [
   ["h", -10],
   ["v", -30],
 ];
+
 const pathSquare = [
   ["h", 100],
   ["v", 100],
@@ -99,14 +93,33 @@ const customShape = [
 ];
 
 const oddCampShape = [
-  ["h", "90-50px"],
+  ["H", 100],
+  ["v", 5],
+  ["H", 50],
+  ["v", 5],
+  ["H", "close"],
+  ["v", 80],
+  ["H", 100],
   ["v", 10],
-  ["h", 10],
-  ["v", 90],
-  ["h", "-100+50px"],
+  ["h", -100],
   ["v", -100],
 ];
 
-let path = oddCampShape;
+const absOddCampShape = [
+  ["H", 50],
+  ["v", 20],
+  ["H", "close"],
+  ["v", 70],
+  ["H", 50],
+  ["v", 10],
+  ["H", -80],
+  ["v", -10],
+  ["H", -40],
+  ["v", -60],
+  ["H", "start"],
+  ["v", -30],
+];
+
+let path = pathInts;
 
 buildFrame("frame", path);
