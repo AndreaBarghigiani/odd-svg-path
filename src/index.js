@@ -58,7 +58,7 @@ const pathInts = [
   ["v", 60],
   ["h", -10],
   ["v", 40],
-  ["h", -100],
+  ["h", -90],
   ["v", -10],
   ["h", 10],
   ["v", -60],
@@ -101,7 +101,7 @@ const oddCampShape = [
   ["v", 80],
   ["H", 100],
   ["v", 10],
-  ["h", -100],
+  ["H", "start"],
   ["v", -100],
 ];
 
@@ -114,12 +114,12 @@ const absOddCampShape = [
   ["v", 10],
   ["H", -80],
   ["v", -10],
-  ["H", -40],
+  ["H", -50],
   ["v", -60],
   ["H", "start"],
   ["v", -30],
 ];
 
-let path = pathInts;
+let path = absOddCampShape;
 
-buildFrame("frame", path);
+buildFrame("frame", path, { arcRad: 10 });

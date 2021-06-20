@@ -21,63 +21,28 @@ const buildFrame = (svgId, points, options = {}) => {
 
     if (command === "H") {
       prevHValue ??= val;
-      // Considerations:
-      // If current value is 'close' or less than before we need to
-      // - subtract arcRad/2 from calculated
-      // - make the x value of the arc must be positive
-      // If previous value is 'close'
-      // - make the x value of the arc negative and sweep at 1
-      // If current value is 'start' or more than before we need to
       considerArc = considerArc / 2;
       if (val === "close") {
         calculated = vw - hStart - considerArc;
       } else if (val === "start") {
         calculated = hStart + considerArc;
       } else if (val <= Math.abs(prevHValue)) {
-        console.log("val is minor equal of prev", val, prevHValue);
-
         calculated =
           val < 0 ? Math.abs(val) + considerArc : vw - val + considerArc;
       } else if (prevHValue === "close") {
         calculated =
           val < 0 ? Math.abs(val) + considerArc : vw - val - considerArc;
-      } else if (prevHValue === "start") {
-        console.log("prev val is start, reading drawing arc");
       } else {
         calculated = val < 0 ? Math.abs(val) : vw - val;
       }
-      // switch (val) {
-      //   case "close":
-      //     calculated = vw - hStart - considerArc;
-      //     console.log("calculated in close:", calculated);
-      //     break;
-      //   case "start":
-      //     calculated = hStart + considerArc;
-      //     console.log("calculated in start:", calculated);
-      //     break;
-
-      //   default:
-      //     if (prevHValue === undefined || val < prevHValue) {
-      //       console.log("val", val);
-      //       calculated =
-      //         val < 0 ? Math.abs(val) - considerArc : vw - val - considerArc;
-      //     } else {
-      //       calculated = val < 0 ? Math.abs(val) : vw - val;
-      //     }
-      //     console.log("calculated in default:", calculated);
-      //     // calculated += considerArc;
-      //     // console.log("calculated in default after:", calculated);
-      //     break;
-      // }
     } else {
       let axis = command === "h" ? vw - hStart * 2 : vh - vStart * 2;
       if (command === "h" && typeof prevHValue === "number") {
-        // axis -= prevHValue;
-        // considerArc *= -1;
+        axis -= prevHValue;
+        considerArc *= -1;
       }
       calculated = percToPixel(val, axis) + considerArc;
     }
-    // console.log(`${command} ${calculated}`);
     return command + calculated;
   }
 
@@ -102,11 +67,6 @@ const buildFrame = (svgId, points, options = {}) => {
       (points[i + 1][1] > 0 ||
         points[i + 1][1] === "close" ||
         points[i + 1][1] === "start");
-    if (nextPoint) {
-      const nextPositive = points[i + 1][1] > 0;
-      const nextClose = points[i + 1][1] === "close";
-      const nextStart = points[i + 1][1] === "start";
-    }
 
     if (command === "h" || command === "H") {
       // console.log({ prevHValue, val });
@@ -157,6 +117,9 @@ const buildFrame = (svgId, points, options = {}) => {
         } else if (prevHValue === "close") {
           sweep = 1;
           x = "-";
+        } else if (points[i + 1][1] === "start") {
+          sweep = 1;
+          x = "-";
         }
       } else {
         if (isPositive) {
@@ -181,21 +144,21 @@ const buildFrame = (svgId, points, options = {}) => {
   // If not present exit.
   if (!svg) return;
 
-  // const vw = Math.max(
-  //   document.documentElement.clientWidth || 0,
-  //   window.innerWidth || 0
-  // );
+  const vw = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  );
 
-  // const vh = Math.max(
-  //   document.documentElement.clientHeight || 0,
-  //   window.innerHeight || 0
-  // );
+  const vh = Math.max(
+    document.documentElement.clientHeight || 0,
+    window.innerHeight || 0
+  );
 
   // Simple testing
-  const vw = 1000;
-  const vh = 600;
+  // const vw = 1000;
+  // const vh = 600;
 
-  let { hStart = 20, vStart = 20, arcRad = 5 } = options;
+  let { hStart = 20, vStart = 20, arcRad = 15 } = options;
 
   // Setting up the SVG
   svg.setAttribute("width", `${vw}px`);
