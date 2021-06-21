@@ -120,6 +120,27 @@ const absOddCampShape = [
   ["v", -30],
 ];
 
-let path = absOddCampShape;
+const newPath1 = [
+  ["h", 100],
+  ["v", 100],
+  ["H", -300],
+  ["v", -10],
+  ["H", "start"],
+  ["v", -90],
+];
 
-buildFrame("frame", path, { arcRad: 10 });
+const paths = [
+  newPath1,
+  oddCampShape,
+  absOddCampShape,
+  pathSquare,
+  customShape,
+];
+
+const path = Math.floor(Math.random() * paths.length);
+const p = oddCampShape;
+
+// buildFrame("frame", p, { arcRad: 10 });
+
+// Random
+buildFrame("frame", paths[path], { arcRad: 10 });

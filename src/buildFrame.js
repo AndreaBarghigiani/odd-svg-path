@@ -15,7 +15,7 @@ const buildFrame = (svgId, points, options = {}) => {
   let prevHValue;
   function createPath(point) {
     let [command, val] = point;
-    let calculated, prevValue;
+    let calculated;
     const operation = val > 0 ? -1 : 1;
     let considerArc = arcRad * 2 * operation;
 
@@ -58,7 +58,6 @@ const buildFrame = (svgId, points, options = {}) => {
     const isPositive = val > 0;
     const isClose = val === "close";
     const isStart = val === "start";
-    const isFirst = i === 0;
     const isLast = i === points.length - 1;
 
     // Next
@@ -73,11 +72,7 @@ const buildFrame = (svgId, points, options = {}) => {
       if (nextPoint) {
         if (isPositive) {
           sweep = 1;
-        } else if (isClose) {
-          console.log("running for arc isClose", val);
-          sweep = 1;
-        } else if (isStart) {
-          console.log("running for arc isStart", val);
+        } else if (isClose || isStart) {
           sweep = 1;
         } else {
           x = "-";
@@ -95,15 +90,6 @@ const buildFrame = (svgId, points, options = {}) => {
           x = y = "-";
         }
       }
-      // console.log(
-      //   `%cSetting up prevVal from ${prevHValue} to ${val}`,
-      //   "color: tomato"
-      // );
-      // if (prevHValue === "close") {
-      //   console.log(
-      //     `Calculated arc: a ${arcRad} ${arcRad} 0 0 ${sweep} ${x}${arcRad} ${y}${arcRad}`
-      //   );
-      // }
       prevHValue = command === "H" ? val : prevHValue;
     } else {
       if (nextPoint) {
