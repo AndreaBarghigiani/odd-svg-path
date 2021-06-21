@@ -154,6 +154,7 @@ const notPlayWellMiddleVertical = [
 ];
 
 const notPlayWellMiddleHorizontal = [
+  ["h", 30],
   ["v", 10],
   ["H", 150],
   ["v", 5],
@@ -162,15 +163,15 @@ const notPlayWellMiddleHorizontal = [
   ["H", "close"],
   ["v", 70],
   ["H", 250],
-  ["v", -2],
+  ["v", -5],
   ["H", 375],
-  ["v", 2],
+  ["v", 5],
   ["H", "start"],
-  ["v", 30],
-  ["H", -40],
-  ["v", 35],
+  ["v", -30],
+  ["H", -60],
+  ["v", -35],
   ["H", "start"],
-  ["v", 35],
+  ["v", -35],
 ];
 
 const paths = [
@@ -187,7 +188,7 @@ const paths = [
 ];
 
 const path = Math.floor(Math.random() * paths.length);
-const p = notPlayWellMiddleHorizontal;
+const p = notPlayWellMiddleVertical;
 
 // buildFrame("frame", p, { arcRad: 10 });
 
