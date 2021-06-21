@@ -5,55 +5,63 @@ import "./styles.css";
 // Each path is affected from the starting point
 // and by the arc radius
 
-const pathTestOne = [
+const relPathOne = [
   ["h", 100],
   ["v", 20],
   ["h", -5],
   ["v", 20],
   ["h", 5],
-  ["v", 30],
-  ["h", -70],
-  ["v", -5],
-  ["h", 8],
-  ["v", -10],
-  ["h", -8],
-  ["v", -55],
+  ["v", 60],
+  ["h", -50],
+  ["v", -2],
+  ["h", -10],
+  ["v", 2],
+  ["h", -40],
+  ["v", -30],
+  ["h", 4],
+  ["v", -40],
+  ["h", -4],
+  ["v", -30],
 ];
 
-const pathTestTwo = [
+const relPathTwo = [
   ["h", 25],
-  ["v", 1],
+  ["v", 3],
   ["h", 50],
   ["v", 80],
-  ["h", -30],
-  ["v", -2],
+  ["h", 25],
+  ["v", 17],
   ["h", -10],
   ["v", -2],
   ["h", -15],
   ["v", -2],
   ["h", -12],
-  ["v", -67.3],
+  ["v", -4],
+  ["h", -63],
+  ["v", -92],
 ];
 
-const pathTestThree = [
+const relPathThree = [
   ["h", 80],
   ["v", 80],
   ["h", -80],
   ["v", -80],
 ];
 
-const pathTestFour = [
+const relPathFour = [
   ["h", 90],
   ["v", 20],
-  ["h", -5],
+  ["h", 10],
   ["v", 20],
-  ["h", 5],
+  ["h", -10],
   ["v", 40],
-  ["h", -90],
-  ["v", -80],
+  ["h", 10],
+  ["v", 20],
+  ["h", -100],
+  ["v", -100],
 ];
 
-const pathInts = [
+const relPathFive = [
   ["h", 100],
   ["v", 60],
   ["h", -10],
@@ -66,14 +74,7 @@ const pathInts = [
   ["v", -30],
 ];
 
-const pathSquare = [
-  ["h", 100],
-  ["v", 100],
-  ["h", -100],
-  ["v", -100],
-];
-
-const customShape = [
+const relPathSix = [
   ["h", 100],
   ["v", 20],
   ["h", -10],
@@ -92,7 +93,14 @@ const customShape = [
   ["v", -25],
 ];
 
-const oddCampShape = [
+const relPathSquare = [
+  ["h", 100],
+  ["v", 100],
+  ["h", -100],
+  ["v", -100],
+];
+
+const absPathOne = [
   ["H", 100],
   ["v", 5],
   ["H", 50],
@@ -105,7 +113,7 @@ const oddCampShape = [
   ["v", -100],
 ];
 
-const absOddCampShape = [
+const absPathTwo = [
   ["H", 50],
   ["v", 20],
   ["H", "close"],
@@ -120,7 +128,7 @@ const absOddCampShape = [
   ["v", -30],
 ];
 
-const newPath1 = [
+const absPathThree = [
   ["h", 100],
   ["v", 100],
   ["H", -300],
@@ -129,16 +137,57 @@ const newPath1 = [
   ["v", -90],
 ];
 
+// The following are edge cases that shown that the arc calculation needs improvements
+const notPlayWellMiddleVertical = [
+  ["h", 100],
+  ["v", 100],
+  ["H", -60],
+  ["v", -10],
+  ["H", "start"],
+  ["v", -30],
+  ["H", -80],
+  ["v", -25],
+  ["H", -40],
+  ["v", -10],
+  ["H", "start"],
+  ["v", -25],
+];
+
+const notPlayWellMiddleHorizontal = [
+  ["v", 10],
+  ["H", 150],
+  ["v", 5],
+  ["H", 75],
+  ["v", 15],
+  ["H", "close"],
+  ["v", 70],
+  ["H", 250],
+  ["v", -2],
+  ["H", 375],
+  ["v", 2],
+  ["H", "start"],
+  ["v", 30],
+  ["H", -40],
+  ["v", 35],
+  ["H", "start"],
+  ["v", 35],
+];
+
 const paths = [
-  newPath1,
-  oddCampShape,
-  absOddCampShape,
-  pathSquare,
-  customShape,
+  relPathOne,
+  relPathTwo,
+  relPathThree,
+  relPathFour,
+  relPathFive,
+  relPathSix,
+  relPathSquare,
+  absPathOne,
+  absPathTwo,
+  absPathThree,
 ];
 
 const path = Math.floor(Math.random() * paths.length);
-const p = oddCampShape;
+const p = notPlayWellMiddleHorizontal;
 
 // buildFrame("frame", p, { arcRad: 10 });
 
